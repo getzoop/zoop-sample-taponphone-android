@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">demo</string>
+    <string name="label_amount">Valor (centavos)</string>
+    <string name="label_installments">Parcelas</string>
+    <string name="label_button_pay">PAGAR</string>
+    <string name="label_credit">Crédito</string>
+    <string name="label_debit">Débito</string>
+</resources>

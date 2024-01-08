@@ -6,11 +6,6 @@ plugins {
 }
 
 buildscript {
-    extra.apply {
-        set("GITHUB_USER", project.findProperty("GITHUB_USER") as String? ?: System.getenv("GITHUB_USER"))
-        set("GITHUB_PAT", project.findProperty("GITHUB_PAT") as String? ?: System.getenv("GITHUB_PAT"))
-    }
-
     repositories {
         google()
         mavenCentral()
@@ -27,8 +22,8 @@ allprojects {
         maven {
             url = uri("https://maven.pkg.github.com/getzoop/zoop-package-public")
             credentials {
-                username = rootProject.extra.get("GITHUB_USER") as String
-                password = rootProject.extra.get("GITHUB_PAT") as String
+                username = project.findProperty("GITHUB_USER") as String? ?: System.getenv("GITHUB_USER")
+                password = project.findProperty("GITHUB_PAT") as String? ?: System.getenv("GITHUB_PAT")
             }
         }
         flatDir {

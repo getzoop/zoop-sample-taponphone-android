@@ -3,6 +3,7 @@ package com.zoop.sdk.taponphone.sample
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.RadioGroup
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
@@ -22,6 +23,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.radioGroupPaymentType.setOnCheckedChangeListener(::onPaymentTypeChanged)
         binding.buttonPay.setOnClickListener(::onButtonPayClicked)
 
         lifecycleScope.launch {
@@ -29,6 +32,17 @@ class MainActivity : AppCompatActivity() {
                 paymentViewModel.uiState.collect{
                     displayPaymentResult(it)
                 }
+            }
+        }
+    }
+
+    private fun onPaymentTypeChanged(group: RadioGroup, checkedId: Int) {
+        when(checkedId) {
+            R.id.radioButtonCredit -> {
+                binding.editTextInstallments.visibility = View.VISIBLE
+            }
+            R.id.radioButtonDebit -> {
+                binding.editTextInstallments.visibility = View.GONE
             }
         }
     }
@@ -73,11 +87,11 @@ class MainActivity : AppCompatActivity() {
     private fun getTapOnPhoneTheme() : TapOnPhoneTheme {
         return TapOnPhoneTheme(
             logo = getDrawable(R.drawable.baseline_android_24),
-            backgroundColor = Color.LTGRAY,
+            backgroundColor = null, // Default is android:background from theme.xml
             animationColor = null, // Default is colorPrimary from theme.xml
             amountTextColor = null, // Default is android:textColor from theme.xml
-            paymentTypeTextColor = Color.DKGRAY,
-            statusTextColor = Color.RED
+            paymentTypeTextColor = null, // Default is android:textColor from theme.xml
+            statusTextColor = null // Default is android:textColor from theme.xml
         )
     }
 

@@ -12,7 +12,7 @@ lifecycle = "2.5.1"
 gson = "2.8.9"
 retrofit = "2.9.0"
 
-zoop = "0.0.0-SNAPSHOT"
+zoop = "0.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -30,8 +30,8 @@ gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 
-zoop-taponphone-debug = { group = "com.zoop.sdk.plugin", name = "taponphone-staging-debug", version.ref = "zoop" }
-zoop-taponphone-release = { group = "com.zoop.sdk.plugin", name = "taponphone-production-release", version.ref = "zoop" }
+zoop-taponphone-debug = { group = "com.zoop.sdk", name = "taponphone-staging-debug", version.ref = "zoop" }
+zoop-taponphone-release = { group = "com.zoop.sdk", name = "taponphone-production-release", version.ref = "zoop" }
 
 
 [plugins]

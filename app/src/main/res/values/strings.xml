@@ -5,4 +5,13 @@
     <string name="label_button_pay">PAGAR</string>
     <string name="label_credit">Crédito</string>
     <string name="label_debit">Débito</string>
+    <string name="message_fill_all_input_data">Preencha todos os campos</string>
+    <string name="define_credential">Definir credencial</string>
+    <string name="label_marketplace">Marketplace</string>
+    <string name="label_seller">Seller</string>
+    <string name="label_client_secret">segredo do cliente</string>
+    <string name="label_client_Id">Id do cliente</string>
+    <string name="label_access_key">Chave de acesso</string>
+    <string name="button_cancel">Cancelar</string>
+    <string name="button_confirm">Confirmar</string>
 </resources>

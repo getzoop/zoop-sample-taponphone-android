@@ -61,11 +61,112 @@
             </com.google.android.material.textfield.TextInputLayout>
         </RadioGroup>
 
+        <LinearLayout
+            android:id="@+id/containerCredential"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="12dp"
+            tools:visibility="visible"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18sp"
+                android:text="@string/define_credential"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textSize="16sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="@string/label_marketplace">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/marketplaceTextInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:hint="@string/label_seller">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/sellerTextInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:hint="@string/label_access_key">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/accessKeyTextInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionDone"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonCancel"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="12dp"
+                    android:text="@string/button_cancel"
+                    android:textColor="@android:color/black" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonConfirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
+                    android:padding="12dp"
+                    android:text="@string/button_confirm" />
+            </LinearLayout>
+        </LinearLayout>
+
         <Button
             android:id="@+id/buttonPay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/label_button_pay" />
+
+        <Button
+            android:id="@+id/buttonDefineCredential"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/define_credential" />
     </LinearLayout>
 
     <TextView

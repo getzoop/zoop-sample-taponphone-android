@@ -1,0 +1,23 @@
+name: SAST
+
+on:
+  push:
+    branches: [ '*' ]
+  pull_request:
+    branches:
+    - main
+  schedule:
+    - cron: '0 8 * * 0'
+
+jobs:
+  dependency-review:
+    name: Dependency Review
+    uses: getzoop/gha-workflows/.github/workflows/dependency-review.yml@v5
+    with:
+      runs-on: pagzoop
+  codeql:
+    name: CodeQL
+    uses: getzoop/gha-workflows/.github/workflows/codeql.yml@v5
+    with:
+      language: kotlin
+      runs-on: pagzoop

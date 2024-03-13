@@ -7,7 +7,7 @@ Caso note algum problema com seu funcionamento, entre em contato com nosso supor
 
 ## Configuração do sample
 
-Adicione as credenciais `MARKETPLACE_ID`,`SELLER_ID`, `API_KEY`, `CLIENT_ID`, `CLIENT_SECRET` e `SCOPE` no `local.properties` do projeto com os devidos valores.
+Adicione as credenciais `MARKETPLACE_ID`,`SELLER_ID`, `API_KEY`, `CLIENT_ID`, `CLIENT_SECRET` no `local.properties` do projeto com os devidos valores.
 
 Exemplo com valores fictícios:
 
@@ -19,14 +19,12 @@ debug.CLIENT_SECRET="2"
 debug.API_KEY="3"
 debug.MARKETPLACE="4"
 debug.SELLER="5"
-debug.SCOPE="6"
 
 release.CLIENT_ID="1"
 release.CLIENT_SECRET="2"
 release.API_KEY="3"
 release.MARKETPLACE="4"
 release.SELLER="5"
-release.SCOPE="6"
 ```
 
 Caso tenha dúvidas em relação a essas credenciais entrar em contato com o suporte. 

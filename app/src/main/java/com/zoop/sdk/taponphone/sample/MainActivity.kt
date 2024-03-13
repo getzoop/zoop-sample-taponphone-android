@@ -62,6 +62,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        initialize()
     }
 
     private fun setCredentials(marketplace: String, seller: String, accessKey: String) {
@@ -115,6 +116,18 @@ class MainActivity : AppCompatActivity() {
             "${uiState.errorMessage ?: ""}\n\nID:${uiState.transactionId ?: ""}"
     }
 
+    private fun initialize() {
+        paymentViewModel.initialize(
+            theme = getTapOnPhoneTheme(),
+            onSuccess = {
+                println("success ")
+            },
+            onError = { e ->
+                println("Error $e")
+            }
+        )
+    }
+
     private fun onButtonPayClicked(view: View) {
         val amount = binding.editTextAmount.text.toString().toLongOrNull() ?: 0L
         val paymentType = when (binding.radioGroupPaymentType.checkedRadioButtonId) {
@@ -124,17 +137,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         val installments = binding.editTextInstallments.text.toString().toIntOrNull()
-        paymentViewModel.initialize(
-            theme = getTapOnPhoneTheme(),
-            onSuccess = {
-                lifecycleScope.launch {
-                    paymentViewModel.pay(amount, paymentType, installments)
-                }
-            },
-            onError = { e ->
-                println("Error $e")
-            }
-        )
         paymentViewModel.pay(amount, paymentType, installments)
     }
 

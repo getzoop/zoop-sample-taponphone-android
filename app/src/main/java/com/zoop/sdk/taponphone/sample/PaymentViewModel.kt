@@ -3,6 +3,7 @@ package com.zoop.sdk.taponphone.sample
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import com.zoop.sdk.plugin.taponphone.api.InitializationRequest
 import com.zoop.sdk.plugin.taponphone.api.PaymentApprovedResponse
 import com.zoop.sdk.plugin.taponphone.api.PaymentErrorResponse
@@ -14,12 +15,15 @@ import com.zoop.sdk.plugin.taponphone.api.TapOnPhoneTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import java.util.UUID
 
 class PaymentViewModel(app: Application) : AndroidViewModel(app) {
-    private val _uiState = MutableStateFlow(UiState(
-        paymentStatus = PaymentStatus.Processing
-    ))
+    private val _uiState = MutableStateFlow(
+        UiState(
+            paymentStatus = PaymentStatus.Processing
+        )
+    )
     val uiState = _uiState.asStateFlow()
 
     data class UiState(
@@ -28,12 +32,11 @@ class PaymentViewModel(app: Application) : AndroidViewModel(app) {
         val transactionId: String? = null
     )
 
-    private val tapOnPhone = TapOnPhone()
-
-    fun initialize(context: Context,
-                   theme: TapOnPhoneTheme,
-                   onError:(TapOnPhoneError) -> Unit,
-                   onSuccess:() -> Unit
+    private val tapOnPhone = TapOnPhone(app.applicationContext)
+    fun initialize(
+        theme: TapOnPhoneTheme,
+        onError: (TapOnPhoneError) -> Unit,
+        onSuccess: () -> Unit
     ) {
         val credentials = InitializationRequest.Credentials(
             clientId = BuildConfig.CLIENT_ID.ifEmpty { "" },
@@ -41,11 +44,9 @@ class PaymentViewModel(app: Application) : AndroidViewModel(app) {
             marketplace = BuildConfig.MARKETPLACE.ifEmpty { "" },
             seller = BuildConfig.SELLER.ifEmpty { "" },
             accessKey = BuildConfig.API_KEY.ifEmpty { "" },
-            scope = BuildConfig.SCOPE.ifEmpty { "" }
         )
 
         val initializationRequest = InitializationRequest(
-            context = context,
             theme = theme,
             credentials = credentials
         )
@@ -62,20 +63,26 @@ class PaymentViewModel(app: Application) : AndroidViewModel(app) {
         paymentType: PaymentType,
         installments: Int?
     ) {
-        tapOnPhone.pay(
-            payRequest = PaymentRequest(
-                referenceId = UUID.randomUUID().toString(),
-                amount = amount,
-                paymentType = paymentType,
-                installments = installments
-            ),
-            onApproved = { response ->
-                onPaymentSuccess(response)
-            },
-            onError = { error ->
-                onPaymentError(error)
-            }
-        )
+        viewModelScope.launch {
+            tapOnPhone.pay(
+                payRequest = PaymentRequest(
+                    referenceId = UUID.randomUUID().toString(),
+                    amount = amount,
+                    paymentType = paymentType,
+                    installments = installments
+                ),
+                onApproved = { response ->
+                    onPaymentSuccess(response)
+                },
+                onError = { error ->
+                    onPaymentError(error)
+                }
+            )
+        }
+    }
+
+    fun setCredential(credentials: InitializationRequest.Credentials) {
+        tapOnPhone.setCredential(credentials)
     }
 
     private fun onPaymentSuccess(response: PaymentApprovedResponse) {

@@ -15,7 +15,7 @@ android {
         minSdk = 28
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0"
     }
 
     buildTypes {
@@ -23,7 +23,6 @@ android {
             buildConfigField("String", "MARKETPLACE", localProperties["debug.MARKETPLACE"].toString())
             buildConfigField("String", "SELLER", localProperties["debug.SELLER"].toString())
             buildConfigField("String", "API_KEY", localProperties["debug.API_KEY"].toString())
-            buildConfigField("String","SCOPE", localProperties["debug.SCOPE"].toString())
             buildConfigField("String","CLIENT_ID", localProperties["debug.CLIENT_ID"].toString())
             buildConfigField("String","CLIENT_SECRET", localProperties["debug.CLIENT_SECRET"].toString())
         }
@@ -31,7 +30,6 @@ android {
             buildConfigField("String", "MARKETPLACE", localProperties["release.MARKETPLACE"].toString())
             buildConfigField("String", "SELLER", localProperties["release.SELLER"].toString())
             buildConfigField("String", "API_KEY", localProperties["release.API_KEY"].toString())
-            buildConfigField("String", "SCOPE", localProperties["release.SCOPE"].toString())
             buildConfigField("String", "CLIENT_ID", localProperties["release.CLIENT_ID"].toString())
             buildConfigField("String", "CLIENT_SECRET", localProperties["release.CLIENT_SECRET"].toString())
         }

@@ -4,11 +4,13 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.zoop.sdk.plugin.taponphone.api.InitializationRequest
 import com.zoop.sdk.plugin.taponphone.api.PaymentType
 import com.zoop.sdk.plugin.taponphone.api.TapOnPhoneTheme
 import com.zoop.sdk.taponphone.sample.databinding.ActivityMainBinding
@@ -18,20 +20,76 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val paymentViewModel: PaymentViewModel by viewModels()
+    private lateinit var credentials: InitializationRequest.Credentials
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.radioGroupPaymentType.setOnCheckedChangeListener(::onPaymentTypeChanged)
-        binding.buttonPay.setOnClickListener(::onButtonPayClicked)
+        binding.apply{
+            marketplaceTextInput.setText(BuildConfig.MARKETPLACE.ifEmpty { "" })
+            sellerTextInput.setText(BuildConfig.SELLER.ifEmpty { "" })
+            accessKeyTextInput.setText(BuildConfig.API_KEY.ifEmpty { "" })
+
+            radioGroupPaymentType.setOnCheckedChangeListener(::onPaymentTypeChanged)
+            buttonPay.setOnClickListener(::onButtonPayClicked)
+
+            buttonDefineCredential.setOnClickListener {
+                binding.containerCredential.visibility = View.VISIBLE
+                binding.buttonDefineCredential.visibility = View.GONE
+            }
+        }
+
+        layoutCredential()
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 paymentViewModel.uiState.collect{
                     displayPaymentResult(it)
                 }
+            }
+        }
+    }
+
+    private fun layoutCredential() {
+        binding.let { layout ->
+            if (::credentials.isInitialized) {
+                layout.marketplaceTextInput.setText(credentials.marketplace)
+                layout.sellerTextInput.setText(credentials.seller)
+                layout.accessKeyTextInput.setText(credentials.accessKey)
+            }
+
+            layout.buttonCancel.setOnClickListener {
+                layout.containerCredential.visibility = View.GONE
+                binding.buttonDefineCredential.visibility = View.VISIBLE
+            }
+
+            layout.buttonConfirm.setOnClickListener {
+                val marketplace = layout.marketplaceTextInput.text.toString()
+                val seller = layout.sellerTextInput.text.toString()
+                val accessKey = layout.accessKeyTextInput.text.toString()
+
+                if (marketplace.isEmpty() || seller.isEmpty() || accessKey.isEmpty()) {
+                    Toast.makeText(
+                        this,
+                        getString(R.string.message_fill_all_input_data),
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                    return@setOnClickListener
+                }
+
+                credentials = InitializationRequest.Credentials(
+                    clientId = BuildConfig.CLIENT_ID.ifEmpty { "" },
+                    clientSecret = BuildConfig.CLIENT_SECRET.ifEmpty { "" },
+                    marketplace,
+                    seller,
+                    accessKey
+                )
+
+                binding.buttonDefineCredential.visibility = View.VISIBLE
+                binding.containerCredential.visibility = View.GONE
             }
         }
     }
@@ -73,15 +131,21 @@ class MainActivity : AppCompatActivity() {
 
         val installments = binding.editTextInstallments.text.toString().toIntOrNull()
         paymentViewModel.initialize(
-            context = applicationContext,
             theme = getTapOnPhoneTheme(),
             onSuccess = {
-                paymentViewModel.pay(amount, paymentType, installments)
+                lifecycleScope.launch {
+                    paymentViewModel.pay(amount, paymentType, installments)
+                }
             },
             onError = {
                 e -> println("Error $e")
             }
         )
+
+        paymentViewModel.apply {
+            if (::credentials.isInitialized) setCredential(credentials)
+            pay(amount, paymentType, installments)
+        }
     }
 
     private fun getTapOnPhoneTheme() : TapOnPhoneTheme {

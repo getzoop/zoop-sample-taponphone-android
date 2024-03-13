@@ -12,7 +12,7 @@ lifecycle = "2.5.1"
 gson = "2.8.9"
 retrofit = "2.9.0"
 
-zoop = "0.0.0"
+zoop = "1.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

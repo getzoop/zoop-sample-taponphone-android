@@ -24,5 +24,9 @@ allprojects {
                 password = project.findProperty("GITHUB_PAT") as String? ?: System.getenv("GITHUB_PAT")
             }
         }
+
+        flatDir {
+            dirs("libs")
+        }
     }
 }

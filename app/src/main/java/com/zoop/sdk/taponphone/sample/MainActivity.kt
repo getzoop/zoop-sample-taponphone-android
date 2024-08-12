@@ -1,7 +1,9 @@
 package com.zoop.sdk.taponphone.sample
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.RadioGroup
 import android.widget.Toast
@@ -10,11 +12,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.zoop.sdk.plugin.taponphone.api.InitializationRequest
-import com.zoop.sdk.plugin.taponphone.api.PaymentType
-import com.zoop.sdk.plugin.taponphone.api.TapOnPhoneTheme
 import com.zoop.sdk.taponphone.sample.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
+import com.zoop.sdk.plugin.TapOnPhoneTheme
+import com.zoop.sdk.type.Option
+
+const val TAG = "MainActivityLog"
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -76,6 +79,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
+        /*
         val credentials = InitializationRequest.Credentials(
             clientId = BuildConfig.CLIENT_ID.ifEmpty { "" },
             clientSecret = BuildConfig.CLIENT_SECRET.ifEmpty { "" },
@@ -84,6 +88,8 @@ class MainActivity : AppCompatActivity() {
             accessKey
         )
         paymentViewModel.setCredential(credentials)
+
+         */
     }
 
     private fun onPaymentTypeChanged(group: RadioGroup, checkedId: Int) {
@@ -98,6 +104,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun displayPaymentResult(uiState: PaymentViewModel.UiState) {
         val status = when (uiState.paymentStatus) {
             PaymentStatus.Processing -> return
@@ -118,28 +125,38 @@ class MainActivity : AppCompatActivity() {
 
     private fun initialize() {
         paymentViewModel.initialize(
-            theme = getTapOnPhoneTheme(),
-            onSuccess = {
-                println("success ")
-            },
-            onError = { e ->
-                println("Error $e")
-            }
+            context = this,
+            useExternalScreen = false,
+            arrangement = TapOnPhoneTheme.Arrangement.DEFAULT
         )
     }
 
     private fun onButtonPayClicked(view: View) {
         val amount = binding.editTextAmount.text.toString().toLongOrNull() ?: 0L
         val paymentType = when (binding.radioGroupPaymentType.checkedRadioButtonId) {
-            R.id.radioButtonCredit -> PaymentType.CREDIT
-            R.id.radioButtonDebit -> PaymentType.DEBIT
-            else -> PaymentType.CREDIT
+            R.id.radioButtonCredit -> Option.CREDIT
+            R.id.radioButtonDebit -> Option.DEBIT
+            else -> Option.CREDIT
         }
 
         val installments = binding.editTextInstallments.text.toString().toIntOrNull()
-        paymentViewModel.pay(amount, paymentType, installments)
+        paymentViewModel.pay(
+            amount = amount,
+            paymentType = paymentType,
+            installments = installments ?: 1,
+            onApplicationEvent = {
+                Log.d(TAG, "onApplicationEvent:$it ")
+            },
+            onPaymentSuccess = {
+                Log.d(TAG, "onPaymentSuccess:$it ")
+            },
+            onPaymentError = {
+                Log.d(TAG, "onPaymentError:$it ")
+            }
+        )
     }
 
+    /*
     private fun getTapOnPhoneTheme(): TapOnPhoneTheme {
         return TapOnPhoneTheme(
             logo = getDrawable(R.drawable.baseline_android_24),
@@ -150,4 +167,6 @@ class MainActivity : AppCompatActivity() {
             statusTextColor = null // Default is android:textColor from theme.xml
         )
     }
+
+     */
 }

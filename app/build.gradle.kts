@@ -12,7 +12,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 28
+        minSdk = 29
         targetSdk = 34
         versionCode = 1
         versionName = "1.0.0"
@@ -47,8 +47,8 @@ android {
 }
 
 dependencies {
-    debugImplementation(libs.zoop.taponphone.debug)
-    releaseImplementation(libs.zoop.taponphone.release)
+//    debugImplementation(libs.zoop.taponphone.debug)
+//    releaseImplementation(libs.zoop.taponphone.release)
 
     implementation(libs.bundles.androidx.lifecycle)
     implementation(libs.androidx.core.ktx)
@@ -62,4 +62,7 @@ dependencies {
     implementation(libs.bundles.retrofit)
     runtimeOnly(libs.kotlin.reflect)
     implementation(libs.lottie)
+
+    implementation(mapOf("name" to "plugin-staging-nubank-debug", "ext" to "aar"))
+
 }

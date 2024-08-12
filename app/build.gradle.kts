@@ -20,18 +20,18 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String", "MARKETPLACE", localProperties["debug.MARKETPLACE"].toString())
-            buildConfigField("String", "SELLER", localProperties["debug.SELLER"].toString())
-            buildConfigField("String", "API_KEY", localProperties["debug.API_KEY"].toString())
-            buildConfigField("String","CLIENT_ID", localProperties["debug.CLIENT_ID"].toString())
-            buildConfigField("String","CLIENT_SECRET", localProperties["debug.CLIENT_SECRET"].toString())
+            buildConfigField("String", "MARKETPLACE", localProperties["staging.MARKETPLACE"].toString())
+            buildConfigField("String", "SELLER", localProperties["staging.SELLER"].toString())
+            buildConfigField("String", "API_KEY", localProperties["staging.API_KEY"].toString())
+            buildConfigField("String","CLIENT_ID", localProperties["mypinpad.NUBANK_STAGE_CLIENT_ID"].toString())
+            buildConfigField("String","CLIENT_SECRET", localProperties["mypinpad.NUBANK_STAGE_CLIENT_SECRET"].toString())
         }
         release {
-            buildConfigField("String", "MARKETPLACE", localProperties["release.MARKETPLACE"].toString())
-            buildConfigField("String", "SELLER", localProperties["release.SELLER"].toString())
-            buildConfigField("String", "API_KEY", localProperties["release.API_KEY"].toString())
-            buildConfigField("String", "CLIENT_ID", localProperties["release.CLIENT_ID"].toString())
-            buildConfigField("String", "CLIENT_SECRET", localProperties["release.CLIENT_SECRET"].toString())
+            buildConfigField("String", "MARKETPLACE", localProperties["production.MARKETPLACE"].toString())
+            buildConfigField("String", "SELLER", localProperties["production.SELLER"].toString())
+            buildConfigField("String", "API_KEY", localProperties["production.API_KEY"].toString())
+            buildConfigField("String","CLIENT_ID", localProperties["mypinpad.NUBANK_PROD_CLIENT_ID"].toString())
+            buildConfigField("String","CLIENT_SECRET", localProperties["mypinpad.NUBANK_PROD_CLIENT_SECRET"].toString())
         }
     }
 

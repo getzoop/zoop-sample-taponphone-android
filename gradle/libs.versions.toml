@@ -1,7 +1,8 @@
 [versions]
+featureDelivery = "2.1.0"
 gradle = "8.1.2"
 
-kotlin = "1.9.20"
+kotlin = "1.9.22"
 coreKtx = "1.12.0"
 activity = "1.8.0"
 appcompat = "1.6.1"
@@ -18,6 +19,7 @@ zoop = "1.1.0"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+feature-delivery = { module = "com.google.android.play:feature-delivery", version.ref = "featureDelivery" }
 lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity-ktx", version.ref = "activity" }

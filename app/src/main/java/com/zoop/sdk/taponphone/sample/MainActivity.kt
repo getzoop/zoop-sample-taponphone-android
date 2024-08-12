@@ -14,7 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.zoop.sdk.taponphone.sample.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
-import com.zoop.sdk.plugin.TapOnPhoneTheme
+import com.zoop.sdk.plugin.taponphone.TapOnPhoneTheme
 import com.zoop.sdk.type.Option
 
 const val TAG = "MainActivityLog"

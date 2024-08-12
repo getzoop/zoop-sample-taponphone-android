@@ -10,10 +10,10 @@ import androidx.lifecycle.AndroidViewModel
 import com.zoop.sdk.InitializeData
 import com.zoop.sdk.Zoop
 import com.zoop.sdk.event.ApplicationEvent
-import com.zoop.sdk.plugin.TapOnPhonePaymentResponse
-import com.zoop.sdk.plugin.TapOnPhonePlugin
-import com.zoop.sdk.plugin.TapOnPhoneTheme
-import com.zoop.sdk.plugin.driver.mypinpad.MyPinPadCredentials
+import com.zoop.sdk.plugin.taponphone.TapOnPhonePaymentResponse
+import com.zoop.sdk.plugin.taponphone.TapOnPhonePlugin
+import com.zoop.sdk.plugin.taponphone.TapOnPhoneTheme
+import com.zoop.sdk.plugin.taponphone.driver.mypinpad.MyPinPadCredentials
 import com.zoop.sdk.type.Callback
 import com.zoop.sdk.type.Currency
 import com.zoop.sdk.type.Environment

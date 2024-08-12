@@ -61,4 +61,5 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.bundles.retrofit)
     runtimeOnly(libs.kotlin.reflect)
+    implementation(libs.lottie)
 }

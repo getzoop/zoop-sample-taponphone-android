@@ -56,6 +56,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.lottie)
 
     implementation(libs.androidx.crypto)
     implementation(libs.gson)

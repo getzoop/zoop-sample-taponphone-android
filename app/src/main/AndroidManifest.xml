@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TapOnPhone"
         android:usesCleartextTraffic="false">
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -12,7 +12,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.zoop.sdk.plugin.taponphone.api.InitializationRequest
 import com.zoop.sdk.plugin.taponphone.api.PaymentType
-import com.zoop.sdk.plugin.taponphone.api.PinPadType
 import com.zoop.sdk.plugin.taponphone.api.TapOnPhoneTheme
 import com.zoop.sdk.taponphone.sample.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
@@ -148,7 +147,6 @@ class MainActivity : AppCompatActivity() {
             amountTextColor = null, // Default is android:textColor from theme.xml
             paymentTypeTextColor = null, // Default is android:textColor from theme.xml
             statusTextColor = null,
-            pinPadType = PinPadType.STANDARD,
         )
     }
 }

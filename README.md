@@ -14,12 +14,6 @@ Exemplo com valores fictícios:
 ```
 sdk.dir=/Users/zoop/Library/Android/sdk
 
-debug.CLIENT_ID="1"
-debug.CLIENT_SECRET="2"
-debug.API_KEY="3"
-debug.MARKETPLACE="4"
-debug.SELLER="5"
-
 release.CLIENT_ID="1"
 release.CLIENT_SECRET="2"
 release.API_KEY="3"
@@ -35,14 +29,6 @@ A sdk é baixada através de um repositório maven referenciado no `build.gradle
 
 As variáveis de ambiente `GITHUB_USER`,`GITHUB_PAT` devem ser configuradas de acordo com as instruções do repositório maven de pacotes públicos da Zoop:
 https://github.com/getzoop/zoop-package-public
-
-
-## Configuração de Ambiente
-
-A SDK da Zoop é distribuida em duas versões, release e debug.
-Para transacionar em ambiente de staging, utilize build de debug, já para o ambiente de produção, utilize o build de release.
-
-Para diferentes ambientes, as credenciais também são diferentes, certifique-se de que está usando as credenciais corretas para o ambiente alvo.
 
 ## Licença
 

@@ -76,14 +76,13 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        val credentials = InitializationRequest.Credentials(
+        paymentViewModel.credentials = InitializationRequest.Credentials(
             clientId = BuildConfig.CLIENT_ID.ifEmpty { "" },
             clientSecret = BuildConfig.CLIENT_SECRET.ifEmpty { "" },
             marketplace,
             seller,
             accessKey
         )
-        paymentViewModel.setCredential(credentials)
     }
 
     private fun onPaymentTypeChanged(group: RadioGroup, checkedId: Int) {

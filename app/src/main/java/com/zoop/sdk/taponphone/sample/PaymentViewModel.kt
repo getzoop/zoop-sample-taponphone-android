@@ -2,9 +2,14 @@ package com.zoop.sdk.taponphone.sample
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.zoop.sdk.core.exception.KernelException
+import com.zoop.sdk.core.exception.ZoopException
+import com.zoop.sdk.core.type.BeepVolumeConfig
 import com.zoop.sdk.plugin.taponphone.api.InitializationRequest
+import com.zoop.sdk.plugin.taponphone.api.InitializationStatus
 import com.zoop.sdk.plugin.taponphone.api.PaymentApprovedResponse
 import com.zoop.sdk.plugin.taponphone.api.PaymentErrorResponse
 import com.zoop.sdk.plugin.taponphone.api.PaymentRequest
@@ -17,6 +22,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.UUID
+import kotlin.concurrent.thread
 
 class PaymentViewModel(app: Application) : AndroidViewModel(app) {
     private val _uiState = MutableStateFlow(
@@ -33,6 +39,13 @@ class PaymentViewModel(app: Application) : AndroidViewModel(app) {
     )
 
     private val tapOnPhone = TapOnPhone(app.applicationContext)
+
+    private val beepVolumeConfig = BeepVolumeConfig(
+        beepVolume = 1f
+    )
+
+    lateinit var credentials: InitializationRequest.Credentials
+
     fun initialize(
         theme: TapOnPhoneTheme,
         onError: (TapOnPhoneError) -> Unit,
@@ -48,14 +61,24 @@ class PaymentViewModel(app: Application) : AndroidViewModel(app) {
 
         val initializationRequest = InitializationRequest(
             theme = theme,
-            credentials = credentials
+            credentials = credentials,
+            beepVolume = beepVolumeConfig
         )
 
-        tapOnPhone.initialize(
-            request = initializationRequest,
-            onSuccess = onSuccess,
-            onError = onError,
-        )
+        lateinit var status: InitializationStatus
+
+        thread {
+            try {
+                status = tapOnPhone.initialize(initializationRequest)
+            } catch (e: KernelException) {
+                // KernelException()
+                // val kernelError: KernelError = e.kernelError
+            } catch (e: ZoopException) {
+                // Tratar exceção
+            } finally {
+                Log.d("isInitialized", status.name)
+            }
+        }
     }
 
     fun pay(
@@ -79,10 +102,6 @@ class PaymentViewModel(app: Application) : AndroidViewModel(app) {
                 }
             )
         }
-    }
-
-    fun setCredential(credentials: InitializationRequest.Credentials) {
-        tapOnPhone.setCredential(credentials)
     }
 
     private fun onPaymentSuccess(response: PaymentApprovedResponse) {

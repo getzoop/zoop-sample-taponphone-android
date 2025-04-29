@@ -7,6 +7,7 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.toColorInt
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -146,6 +147,7 @@ class MainActivity : AppCompatActivity() {
             amountTextColor = null, // Default is android:textColor from theme.xml
             paymentTypeTextColor = null, // Default is android:textColor from theme.xml
             statusTextColor = null,
+            statusBarColor = "#000000".toColorInt()
         )
     }
 }

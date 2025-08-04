@@ -8,12 +8,14 @@ import androidx.lifecycle.viewModelScope
 import com.zoop.sdk.core.exception.KernelException
 import com.zoop.sdk.core.exception.ZoopException
 import com.zoop.sdk.core.type.BeepVolumeConfig
-import com.zoop.sdk.plugin.taponphone.api.InitializationRequest
+import com.zoop.sdk.core.type.TimeoutConfig
+import com.zoop.sdk.plugin.taponphone.api.Credentials
 import com.zoop.sdk.plugin.taponphone.api.InitializationStatus
 import com.zoop.sdk.plugin.taponphone.api.PaymentApprovedResponse
 import com.zoop.sdk.plugin.taponphone.api.PaymentErrorResponse
 import com.zoop.sdk.plugin.taponphone.api.PaymentRequest
 import com.zoop.sdk.plugin.taponphone.api.PaymentType
+import com.zoop.sdk.plugin.taponphone.api.SdkConfig
 import com.zoop.sdk.plugin.taponphone.api.TapOnPhone
 import com.zoop.sdk.plugin.taponphone.api.TapOnPhoneError
 import com.zoop.sdk.plugin.taponphone.api.TapOnPhoneTheme
@@ -38,38 +40,51 @@ class PaymentViewModel(app: Application) : AndroidViewModel(app) {
         val transactionId: String? = null
     )
 
-    private val tapOnPhone = TapOnPhone(app.applicationContext)
+    private var tapOnPhone = TapOnPhone(
+        context = app.applicationContext,
+        credentials = loadCredentials()
+    )
+
+    private fun loadCredentials() = Credentials(
+        clientId = BuildConfig.CLIENT_ID.ifEmpty { "" },
+        clientSecret = BuildConfig.CLIENT_SECRET.ifEmpty { "" },
+        marketplace = BuildConfig.MARKETPLACE.ifEmpty { "" },
+        seller = BuildConfig.SELLER.ifEmpty { "" },
+        accessKey = BuildConfig.API_KEY.ifEmpty { "" },
+    )
+
+
+    var timeoutConfig = TimeoutConfig(
+        discoveryTimeout = 120_000,
+        processingTimeout = 30_000,
+        networkTimeout = 45_000,
+        totalElapsedTimeout = 180_000
+    )
 
     private val beepVolumeConfig = BeepVolumeConfig(
         beepVolume = 1f
     )
 
-    lateinit var credentials: InitializationRequest.Credentials
+    lateinit var credentials: Credentials
 
     fun initialize(
         theme: TapOnPhoneTheme,
         onError: (TapOnPhoneError) -> Unit,
         onSuccess: () -> Unit
     ) {
-        val credentials = InitializationRequest.Credentials(
-            clientId = BuildConfig.CLIENT_ID.ifEmpty { "" },
-            clientSecret = BuildConfig.CLIENT_SECRET.ifEmpty { "" },
-            marketplace = BuildConfig.MARKETPLACE.ifEmpty { "" },
-            seller = BuildConfig.SELLER.ifEmpty { "" },
-            accessKey = BuildConfig.API_KEY.ifEmpty { "" },
-        )
-
-        val initializationRequest = InitializationRequest(
+        val sdkConfigk = SdkConfig(
+            timeout = timeoutConfig,
             theme = theme,
-            credentials = credentials,
             beepVolume = beepVolumeConfig
         )
+
+        tapOnPhone.setSdkConfig(sdkConfigk)
 
         lateinit var status: InitializationStatus
 
         thread {
             try {
-                status = tapOnPhone.initialize(initializationRequest)
+                status = tapOnPhone.initialize()
             } catch (e: KernelException) {
                 // KernelException()
                 // val kernelError: KernelError = e.kernelError

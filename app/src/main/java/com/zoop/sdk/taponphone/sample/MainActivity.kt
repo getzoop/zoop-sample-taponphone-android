@@ -11,7 +11,7 @@ import androidx.core.graphics.toColorInt
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.zoop.sdk.plugin.taponphone.api.InitializationRequest
+import com.zoop.sdk.plugin.taponphone.api.Credentials
 import com.zoop.sdk.plugin.taponphone.api.PaymentType
 import com.zoop.sdk.plugin.taponphone.api.TapOnPhoneTheme
 import com.zoop.sdk.taponphone.sample.databinding.ActivityMainBinding
@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        paymentViewModel.credentials = InitializationRequest.Credentials(
+        paymentViewModel.credentials = Credentials(
             clientId = BuildConfig.CLIENT_ID.ifEmpty { "" },
             clientSecret = BuildConfig.CLIENT_SECRET.ifEmpty { "" },
             marketplace,

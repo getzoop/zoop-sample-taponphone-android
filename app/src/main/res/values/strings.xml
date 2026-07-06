@@ -5,6 +5,7 @@
     <string name="label_button_pay">PAGAR</string>
     <string name="label_credit">Crédito</string>
     <string name="label_debit">Débito</string>
+    <string name="label_pix">Pix</string>
     <string name="message_fill_all_input_data">Preencha todos os campos</string>
     <string name="define_credential">Definir credencial</string>
     <string name="label_marketplace">Marketplace</string>
@@ -14,4 +15,18 @@
     <string name="label_access_key">Chave de acesso</string>
     <string name="button_cancel">Cancelar</string>
     <string name="button_confirm">Confirmar</string>
+    <string name="try_again">Tentar novamente</string>
+    <string name="initialize">Inicializar</string>
+    <string name="timeout">Configurar timeout</string>
+    <string name="return_to_home">Return to home</string>
+    <string name="label_reference_id">ReferenceId</string>
+    <string name="show_config_details">Exibir config details</string>
+    <string name="config_details_title">Detalhes de configuração</string>
+    <string name="timeout_title">Configuração de timeout</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="label_discovery_timeout">Discovery</string>
+    <string name="label_processing_timeout">Processing</string>
+    <string name="label_network_timeout">Network</string>
+    <string name="label_total_elapsed_timeout">Total elapsed</string>
 </resources>

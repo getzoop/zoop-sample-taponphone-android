@@ -11,6 +11,8 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Opt out of Android 15 forced edge-to-edge for XML Views + ActionBar. -->
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>

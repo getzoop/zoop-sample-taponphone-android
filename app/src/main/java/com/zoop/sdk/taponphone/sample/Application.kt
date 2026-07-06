@@ -1,13 +1,13 @@
 package com.zoop.sdk.taponphone.sample
 
 import android.app.Application
-import com.zoop.sdk.plugin.taponphone.api.TapOnPhone
+import com.zoop.sdk.plugin.taponphone.TapOnPhone
 
-class Application : Application(){
-
+class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        if(!TapOnPhone.kernelInitialize(this))
-            return
+
+        if (!TapOnPhone.kernelInitialize(this))
+        return
     }
 }

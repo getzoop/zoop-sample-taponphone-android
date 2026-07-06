@@ -201,18 +201,6 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/buttonTimeout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/timeout" />
-
-            <Button
-                android:id="@+id/buttonInitialize"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/initialize" />
-
-            <Button
                 android:id="@+id/buttonPay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -311,12 +299,6 @@
                         android:text="@string/button_confirm" />
                 </LinearLayout>
             </LinearLayout>
-
-            <Button
-                android:id="@+id/buttonShowConfigDetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/show_config_details" />
 
             <TextView
                 android:id="@+id/textViewPaymentInfo"

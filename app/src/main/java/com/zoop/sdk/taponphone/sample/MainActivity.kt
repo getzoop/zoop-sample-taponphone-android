@@ -232,16 +232,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun onButtonPayClicked(view: View) {
         val amount = binding.editTextAmount.text.toString().toLongOrNull() ?: 0L
+        val isPix = binding.radioGroupPaymentType.checkedRadioButtonId == R.id.radioButtonPix
         val paymentType = when (binding.radioGroupPaymentType.checkedRadioButtonId) {
-            R.id.radioButtonCredit -> PaymentType.CREDIT
             R.id.radioButtonDebit -> PaymentType.DEBIT
-            R.id.radioButtonPix -> PaymentType.PIX
             else -> PaymentType.CREDIT
         }
         val installments = binding.editTextInstallments.text.toString().toIntOrNull()
         val referenceId = binding.editTextReferenceId.text.toString().ifEmpty { null }
 
-        if (paymentType == PaymentType.PIX) {
+        if (isPix) {
             mainViewModel.payByPix(amount, referenceId)
         } else {
             mainViewModel.pay(amount, paymentType, installments, referenceId)
